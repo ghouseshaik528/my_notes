@@ -1,0 +1,91 @@
+what php can do?
+----------------
+1. Access info typed into web form and do something with     it like.,
+    Send an Email
+    navigate to a specific page based on user input
+    create user account
+    log users info
+    etc.,
+2. Find out browser and operating system
+3. Display alternative web pages to specific users - like    mobile devices
+4. Basic and advanced math
+5. Create Global HTML templates
+
+Basic PHP syntax:
+-----------------
+-A php script can be placed anywhere in the web document.
+-All the user defined functions,classes and keywords(if,   else,while,echo etc.,) are not CASE-SENSITIVE. However,   PHP variables are CASE-SENSITIVE.
+
+PHP variables:
+--------------
+4 basic variables types:
+
+1.Boolean
+2.Integer number
+3.Floating number
+4.String
+Ex:
+---
+<?php
+	$my_name = "Brad";
+	$my_age = 25;
+	$fav_colour = "Blue";
+	$lesson_num = 3;
+    
+    print("My name is $my_name! <br>
+    I'm $my_age years old, and like the colour $fav_colour.");
+?>
+
+Defining Constants:
+-------------------
+define('TITLE','Defining Constants')
+<?php echo TITLE?>  //op: Defining Constant
+
+Excercise upto now:
+-------------------
+ check the file excercise-1.php
+
+PHP Arrays:
+-----------
+-Allows you to store multiple values within a variable.
+Ex:
+---
+cars = array('Honda','BMW','Toyota');
+<?php
+    echo $cars[0];  //Honda
+    echo $cars[1];  //BMW
+    echo $cars[2];  //Toyota
+?>
+
+Associative Arrays:
+-------------------
+Ex:
+---
+$cars =array(
+       'model' => 'Audi',
+       'year' => date('Y'),
+       'color' => 'Jet_Black'
+   );
+
+Multi-dimensional Arrays:
+-------------------------
+Ex:
+---
+$cars =array(
+        array(
+            'model' => 'Audi',
+            'year' => date('Y'),
+            'color' => 'Jet_Black'
+        ),
+        array(
+            'model' => 'BMW',
+            'year' => date('Y'),
+            'color' => 'Blue'
+        ),
+        array(
+            'model' => 'Honda',
+            'year' => date('Y'),
+            'color' => 'Purple'
+        )
+    );
+

@@ -1,5 +1,0 @@
-1. Effective computation in physics
-2. Learn python the hard way
-3. Introduction to computation and programming using python
-4. Python crash course
-5. Python for data analysis

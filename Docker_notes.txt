@@ -1,0 +1,193 @@
+1.cd /etc/yum.repos.d
+2.vim docker.repo
+    [dockerrepo]
+    name=Docker Repository
+    baseurl=https://yum.dockerproject.org/repo/main/centos/7/
+    enabled=1
+    gpgcheck=1
+    gpgkey=https://yum.dockerproject.org/gpg
+3.yum update
+4.yum install -y docker-engine
+5.systemctl enable docker
+6.systemctl start docker
+7.docker --version
+8.docker images
+9.cd /var/run
+10.ls -al dock*
+11.cat /etc/group | grep docker
+12.usermod -a -G docker user
+
+11Jan2019:
+----------
+Installing Docker:
+------------------
+
+1.sudo yum install -y yum-utills lvm2 device-mapper-persistent-data
+2.rpm -qa | grep lvm2
+3.sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+4.ls /etc/yum.repos.d/
+5.sudo yum install docker-ce
+6.sudo systemctl enable docker
+7.sudo systemctl start docker
+8.sudo usermod -a -G docker user
+9.grep docker /etc/group
+10.after assigning completely logout and then login
+10.docker run hello-world
+
+Base Images:
+------------
+1.docker images
+2.docker search -to search directly in your cmd prmpt it show the currently available repositories to       pull
+    docker search httpd
+    docker search apache
+    docker search ngnix
+3.docker pull hello-world
+4.docker run hello-world:latest 
+5.docker pull centos:centos6
+6.docker pull nginx:latest
+7.docker inspect nginx - this will show us the complete information in JSON format
+
+Running Containers:
+-------------------
+1.docker search whales
+2.docker pull docker/whalesay
+3.docker run docker/whalesay cowsay IAMDOCKER 
+4.docker ps -to know the currently running Containers
+5.docker ps -a -to check the previously runned Containers  
+6.docker run -it centos:latest /bin/bash
+    Here i means to run in interactive mode
+         t means to run a terminal in interactive mode
+         Containers name is centos:latest
+         /bin/bash here i am running a command to open a bash shell
+7.whoami    - to check who is working
+8.yum update - here i am updating a container os, not the host os.
+9.docker ps -a - to check which container has recently been worked on.
+10.docker run -d centos:latest /bin/bash
+11.docker pull nginx:latest
+12.docker run -d nginx:latest
+13.docker inspect wonderful_germain
+14.yum install elinks
+15.elinks http://172.17.0.2
+16.press 'q' to quit
+17.sudo yum install telnet
+18.telnet localhost 80
+19.docker stop wonderful_germain
+20.docker run -d --name=MyWeb1 nginx:latest
+21.docker inspect MyWeb1
+23.docker run -d --name=MyWeb2 nginx:latest
+24.docker inspect MyWeb2
+25.docker stop MyWeb1
+26.docker stop MyWeb2
+
+13JAN2019:
+----------
+The container lifecycle:
+------------------------
+1.docker run -d --name=LifeCycle1 nginx:latest
+2.ifconfig
+3.docker stop LifeCycle1
+4.docker start LifeCycle1
+5.docker exec -it LifeCycle1 /bin/bash
+6.ps aux | grep nginx
+7.exit
+8.docker stop LifeCycle1
+9.docker restart LifeCycle1
+
+14JAN2019:
+----------
+Image and Container Management:
+-------------------------------
+
+1.docker rmi centos:centos6 - to remove docker images
+2.docker rmi -f hello-world - to remove forcefully
+3.docker ps -a -q - to get only container ID.
+4.docker rm `docker ps -a -q` -it will remove all containers
+5.docker rmi hello-world:latest
+
+Redirection: Ports and Volumes:
+-------------------------------
+1.docker run -d --name=WebServer1 -P nginx:latest
+2.docker inspect WebServer1 | grep IPAddr - it will search for that ipaddress
+3.elinks http://localhost:32768
+4.docker port WebServer1 $CONTAINERPORT
+5.docker stop WebServer1
+6.docker run -d -p 8080:80 --name=WebServer2 nginx:latest - it will bind our localport to remote port
+7.elinks http://localhost:8080
+8.docker stop WebServer2
+9.docker run -d -p 8080:80 --name=WebServer3 -v /mnt/data nginx:latest - it will be useful when you want to copy or backup on your host system but it didn't expose any functionalities by default.
+10.mkdir www
+11.cd www
+12.vim index.html
+    <html>
+        <head>
+        </head>
+        <body>
+            <hr/>
+            This is a test file
+            <hr/>
+        </body>
+    </html>
+13.docker run -d -p 8080:80 --name=WebServer4 -v /home/user/www:/usr/share/nginx/html nginx:latest -it     will map your host port to remote port and then it will execute the file host file in the remote        server.
+14.vim index.html
+    <html>
+        <head>
+        </head>
+        <body>
+            <hr/>
+            This is a test file
+            <hr/>
+            New information has been added.
+        </body>
+    </html>
+15.elinks http://localhost:8080 - it will automatically apply the changes and i dont have to now           connect to the container and run some commands, because we are dealing with mount data that we          hosted.
+
+The Docker File:
+----------------
+1.mkdir builds
+2.cd builds
+3.vim Dockerfile
+    FROM debian:stable
+    MAINTAINER ghouseshaik528<gmshaik528@gmail.com>
+
+    RUN apt-get update
+    RUN apt-get upgrade
+4.docker build -t ghouseshaik528/myapache .
+5.vim Dockerfile
+    FROM debian:stable
+    MAINTAINER ghouseshaik528<gmshaik528@gmail.com>
+
+    RUN apt-get update && apt-get upgrade -y && apt-get install -y apache2 elinks telnet openssh-server
+    ENV MYVALUE my-value
+6.docker run -it ghouseshaik528/myapache:latest /bin/bash
+7.echo $MYVALUE
+8.docker rm `docker ps -a -q`
+9.vim Dockerfile
+    FROM debian:stable
+    MAINTAINER ghouseshaik528<gmshaik528@gmail.com>
+
+    RUN apt-get update && apt-get upgrade -y && apt-get install -y apache2 elinks telnet openssh-server
+    ENV MYVALUE my-value
+
+    EXPOSE 80
+    EXPOSE 22
+10.ssh cloud_user@13.233.153.150
+11.echo $MYVALUE
+12.docker ps - here you can see the ports are visible
+13.exit
+14.vim Dockerfile
+    FROM debian:stable
+    MAINTAINER ghouseshaik528<gmshaik528@gmail.com>
+
+    RUN apt-get update && apt-get upgrade -y && apt-get install -y apache2 elinks telnet openssh-server
+    ENV MYVALUE my-value
+
+    EXPOSE 80
+
+    CMD ["/usr/sbin/apache2ctl","-D","FOREGROUND"]
+15.docker build -t ghouseshaik528/myapache .
+16.docker run -d ghouseshaik528/myapache:latest
+17.docker inspect evil_works | grep IPAddr
+18.elinks http://172.17.0.2
+19.docker exec -it evil_works /bin/bash
+20.ps aux | grep apache
+21.echo $MYVALUE

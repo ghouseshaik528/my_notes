@@ -1,0 +1,15 @@
+1.sudo apt update && sudo apt upgrade -y
+2.Enable repositories in software & updates app
+3.Install media codecs - sudo apt install ubuntu-restricted-extras
+4.Enable DVD support - sudo apt install libdvd-pkg
+                       sudo dpkg-reconfigure libdvd-pkg
+5.Install software from software center
+6.Download software from the web
+7.Enable Flatpak support - sudo apt install flatpak
+                           sudo apt install gnome-software-plugin-flatpak
+8.https://flathub.org/home - to download any applications
+9.flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+10.minimize icons by click - 
+    18.04vs  - gsettings set org.gnome.shell.extensions.dash-to-dock click-action                                      'minimize'
+    16.04vs  - gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-minimize-window true
+11.clean up system - sudo apt autoremove

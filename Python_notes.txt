@@ -1,0 +1,1129 @@
+11JAN2019:
+**********
+Environment Setup:
+------------------
+
+    login as root user by using the command
+        sudo -i or sudo su -
+    Step-1: Checking updates 
+        yum update
+    Step-2: Installing the development tools by using the command
+        yum groupinstall -y "development tools"
+    Step-3: Installing some required utilities like lsof,wget,vim-enhanced,words,which
+        yum install -y lsof wget vim-enhanced words which
+    step-4: Configuring git
+        git config --global user.name "ghouseshaik528"
+        git config --global user.email ghouseshaik678@gmail.com
+    step-5: Setting up some changes in vim & bashrc like look & file changes.
+        curl https://raw.githubusercontent.com/linuxacademy/content-python3-sysadmin/master/helpers/bashrc -o ~/.bashrc
+        curl https://raw.githubusercontent.com/linuxacademy/content-python3-sysadmin/master/helpers/vimrc -o ~/.vimrc
+    step-6: Creating a sample directory and adding a file.txt and committing these changes to git repository
+        >mkdir sample
+        >cd sample/
+        >touch file.txt
+        >git init
+        >git add --all
+        >git status
+        >git commit -m "Adding new file"
+    step-7: Download and install python3 from source
+        yum install -y \
+        libffi-devel \
+        zlib-devel \
+        bzip2-devel \
+        openssl-devel \
+        ncurses-devel \
+        sqlite-devel \
+        readline-devel \
+        tk-devel \
+        gdbm-devel \
+        db4-devel \
+        libpcap-devel \
+        xz-devel \
+        expat-devel
+    step-8: cd /usr/src 
+    step-9: Downloading the latest python3 from the source
+        wget http://python.org/ftp/python/3.7.2/Python-3.7.2.tar.xz
+    step-10: Unpacking the tar file
+        tar xf Python-3.7.2.tar.xz
+    step-11: Changing the directory
+        cd Python-3.7.2
+    step-12: ./configure --enable-optimizations
+    step-13: make altinstall causes it to not replace the built in python executable.
+        make altinstall
+    step-14: exit
+    step-15: upgrading pip
+        sudo pip3.7 install --upgrade pip
+
+History & Benifits of Python:
+-----------------------------
+
+    > Created by Guido Van Rossum
+    > First appearance in 1991
+    > Used and supported by tech giants like Google and YouTube
+    > supported two major versions for nearly a decade.
+
+    Key Points About Python:
+
+    >Object-Oriented Scripting Language.
+    >Dynamic & strong typing system.
+    >Dynamic types are checked at runtime
+    >Strong types don’t change implicitly, can’t add 1 and "something".
+    >Supports functional concepts like map, reduce, filter, and list comprehension.
+    >Whitespace delimited (no { or } around code blocks)
+    >Pseudo-code like syntax
+    >Extremely popular language used across many different disciplines (academia, data science,           scripting, web development, etc.).
+    >Large open source community and public package index (Pypi).
+    >Runs on all major operating systems (historically more of a pain to run on Windows than Unix         systems). Pre-installed on most *NIX systems (usually Python 2).
+    >Supported by large companies such as Google & YouTube.
+    >Consistently high on the Tiobe Index (one of the most searched programming languages). 4th as of     the time of recording this.
+    >Placed in the Stack Overflow Developer Survey’s top 10 for Most Popular Programming Languages, Most Loved Programming Languages, and placed number 1 as the “Most Wanted Language” (meaning it’s the language that developers want to use the most).
+
+What's the deal with Python3:
+-----------------------------
+    Python2 vs Python3: https://wiki.python.org/moin/Python2orPython3
+    Difference between Python&3: https://docs.python.org/3/whatsnew/3.0.html
+
+12JAN2019:
+**********
+Introducing REPL for rapid experimentation:
+-------------------------------------------
+REPL - Read Evaluate Print Loop
+    Each line is read, evaluated, the return value is then printed to the screen, and then the process repeats.Python ships with a REPL, and you can access it by running python3.6 from your terminal. 
+
+The >>> indicates that you can type on that line.
+... which means that you are currently in a scoped area and will need to enter a blank line (no spaces) before it evaluates the entire code block. 
+
+Lastly, to exit the REPL, you can either type exit() (the parentheses are important), or you can hit Ctrl+d on your keyboard.
+
+Creating and Running Python Scripts:
+------------------------------------
+
+    1.Creating our first python script:
+    ---------------------------------
+        1. vim hello.py
+            print("Hello World!")
+        2.To run the file use 
+            python3.7 hello.py
+
+    2.Setting a shebang:
+    ------------------
+    You’ll most likely want your scripts to be:
+
+        1.Executable from anywhere (in our $PATH).
+        2.Executable without explicitly using the python3.7 CLI.
+
+        Thankfully, we can set the process to interpret our scripts by setting a shebang at the top of the file: 
+
+        hello.py
+
+        #!/usr/bin/env python3.7
+        print("Hello, World")
+        We’re not quite done; now we need to make the file executable using chmod: 
+
+        $ chmod u+x hello.py
+        Run the script now by using ./hello.py and we’ll see the same result. If we’d rather not have a file extension on our script, we can now remove that since we’ve put a shebang in the file 
+        
+        mv hello.py hello 
+        ./hello -will still result in the same thing. 
+
+    3.Adding Scripts to our PATH:
+    -----------------------------
+    Now we need to make sure that we can put this in our $PATH. 
+
+    we’ll be using a bin directory in our $HOME folder to store our custom scripts, but scripts can go into any directory that is in your $PATH. 
+
+    Let’s create a bin directory and move our script: 
+
+    $ mkdir ~/bin
+    $ mv hello ~/bin/
+
+    Here’s how we add this directory to the $PATH in our .bashrc (the .bashrc for this course already contains this): 
+
+    $ export PATH=$HOME/bin:$PATH
+    Finally, run the hello script from our $PATH: 
+
+    $ hello
+    Hello, World!
+
+Using Comments:
+---------------
+Single Line Comment
+
+    We can comment out a whole line:
+    # This is a full like comment
+
+    or we can comment at the end of a line:
+    2 + 2 # This will add the numbers
+
+Common Data Types:
+******************
+Strings:
+--------
+    python String link:https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str
+
+    We’ve already worked with a string when we created our “Hello, World!” program. We create strings using either single quotes ('), double quotes ("), or triple single or double quotes for a multi-line string: 
+
+        >>> 'single quoted string'
+        'single quoted string'
+        >>> "double quoted string"
+        'double quoted string'
+        >>> '''
+        ... this is a triple
+        ... quoted string
+        ... '''
+        '\nthis is a triple\nquoted string\n'
+
+    Strings also work with some arithmetic operators. 
+
+    We can combine strings using the + operator and multiply a string by a number using the * operator: 
+
+        >>> "pass" + "word"
+        'password'
+        >>> "Ha" * 4
+        'HaHaHaHa'
+    
+    Def: A string is a sequence of characters grouped together. 
+
+    We need to cover the concept of an “Object” in object-oriented programming before moving on.
+
+    An “object” encapsulates two things:
+
+        State
+        Behavior
+    
+    For the built-in types, the state makes sense because it’s the entire contents of the object. 
+    The behavior aspect means that there are functions that we can call on the instances of the objects that we have. 
+    A function bound to an object is called a “method”. Here are some example methods that we can call on strings:
+    
+    'find' locates the first instance of a character (or string) in a string. This function returns the index of the character or string:
+
+        >>> "double".find('s')
+        -1
+        >>> "double".find('u')
+        2
+        >>> "double".find('bl')
+        3
+    'lower' converts all of the characters in a string to their lowercase versions (if they have one). This function returns a new string without changing the original, and this becomes important later:
+
+        >>> "TeStInG".lower() # "testing"
+        'testing'
+        >>> "another".lower()
+        'another'
+        >>> "PassWord123".lower()
+        'password123'
+
+    Lastly, if we need to use quotes or special characters in a string we can do that using the '’' character: 
+
+        >>> print("Tab\tDelimited")
+        Tab     Delimited
+        >>> print("New\nLine")
+        New
+        Line
+        >>> print("Slash\\Character")
+        Slash\Character
+        >>> print("'Single' in Double")
+        'Single' in Double
+        >>> print('"Double" in Single')
+        "Double" in Single
+        >>> print("\"Double\" in Double")
+        "Double" in Double
+
+Numbers(int and float):
+-----------------------
+Reference:https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex
+
+    Numbers:
+    --------
+    There are two main types of numbers that we’ll use in Python, int and float. For the most part, we won’t be calling methods on number types, and we will instead be using a variety of operators. 
+
+        >>> 2 + 2 # Addition
+        4
+        >>> 10 - 4 # Subtraction
+        6
+        >>> 3 * 9 # Multiplication
+        27
+        >>> 5 / 3 # Division
+        1.66666666666667
+        >>> 5 // 3 # Floor division, always returns a number without a remainder
+        1
+        >>> 8 % 3 # Modulo division, returns the remainder
+        2
+        >>> 2 ** 3 # Exponent
+        8
+
+    If either of the numbers in a mathematical operation in Python is a float, then the other will be converted before carrying out the operation, and the result will always be a float.
+
+    Converting Strings and Numbers:
+    -------------------------------
+    Conversion is not uncommon since we need to convert from one type to another when writing a script and Python provides built-in functions for doing that with the built-in types. For strings and numbers, we can use the str, int, and float functions to convert from one type to another (within reason). 
+
+        >>> str(1.1)
+        '1.1'
+        >>> int("10")
+        10
+        >>> int(5.99999)
+        5
+        >>> float("5.6")
+        5.6
+        >>> float(5)
+        5.0
+    
+    You’ll run into issues trying to convert strings to other types if they aren’t present in the string 
+
+        >>> float("1.1 things")
+        Traceback (most recent call last):
+        File "", line 1, in 
+        ValueError: could not convert string to float: '1.1 things'
+
+Booleans and None:
+------------------
+Reference:https://docs.python.org/3/library/stdtypes.html#truth-value-testing
+
+    Booleans:
+    ---------
+    Booleans represent “truthiness” and Python has two boolean constants: True and False.
+
+    Notice that these both start with capital letters. Later we will learn about comparisons operations, and those will often return either True or False.
+
+    Representing Nothingness with None:
+    -----------------------------------
+    Most programming languages have a type that represents the lack of a value, and Python is no different. The constant used to represent nothingness in Python is None. None is a “falsy”, and we’ll often use it to represent when a variable has no value yet.
+
+    An interesting thing to note about None is that if you type None into your REPL, there will be nothing printed to the screen. That’s because None actually evaluates into nothing.
+
+Working with variables:
+-----------------------
+
+    We can assign a value to a variable by using a single = and we don’t need to (nor can we) specify the type of the variable. 
+
+        >>> my_str = "This is a simple string"
+    Now we can print the value of that string by using my_var later on: 
+
+        >>> print(my_str)
+        This is a simple string
+    Before, we talked about how we can’t change a string because it’s immutable. This is easier to see now that we have variables. 
+
+        >>> my_str += " testing"
+        >>> my_str
+        'This is a simple string testing'
+    That didn’t change the string; it reassigned the variable. The original string of "This is a simple string" was unchanged.
+
+    An important thing to realize is that the contents of a variable can be changed and we don’t need to maintain the same type: 
+
+        >>> my_str = 1
+        >>> print(my_str)
+        1
+    Ideally, we wouldn’t change the contents of a variable called my_str to be an int, but it is something that python would let use do. 
+
+    One last thing to remember is that if we assign a variable with another variable, it will be assigned to the result of the variable and not whatever that variable points to later. 
+
+        >>> my_str = 1
+        >>> my_int = my_str
+        >>> my_str = "testing"
+        >>> print(my_int)
+        1
+        >>> print(my_str)
+        testing
+
+Lists:
+------
+Reference:https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range
+          https://docs.python.org/3/library/stdtypes.html#list
+
+    Lists:
+    ------
+    A list is created in Python by using the square brackets ([, and ]) and separating the values by commas. Here’s an example list: 
+
+        >>> my_list = [1, 2, 3, 4, 5]
+    There’s really not a limit to how long our list can be (there is, but it’s very unlikely that we’ll hit it while scripting). 
+
+    Reading from Lists:
+    -------------------
+    To access an individual element of a list, you can use the index and Python uses a zero-based index system: 
+
+        >>> my_list[0]
+        1
+        >>> my_list[1]
+        2
+    If we try to access an index that is too high (or too low) then we’ll receive an error: 
+
+        >>> my_list[5]
+        Traceback (most recent call last):
+        File "", line 1, in 
+        IndexError: list index out of range
+    To make sure that we’re not trying to get an index that is out of range, we can test the length using the len function (and then subtract 1): 
+
+        >>> len(my_list)
+        5
+    Additionally, we can access subsections of a list by “slicing” it. We provide the starting index and the ending index (the object at that index won’t be included). 
+
+        >>> my_list[0:2]
+        [1, 2]
+        >>> my_list[1:0]
+        [2, 3, 4, 5]
+        >>> my_list[:3]
+        [1, 2, 3]
+        >>> my_list[0::1]
+        [1, 2, 3, 4, 5]
+        >>> my_list[0::2]
+        [1, 3, 5]
+    Modifying a List:
+    -----------------
+    Unlike strings which can’t be modified (you can’t change a character in a string), you can change a value in a list using the subscript equals operation: 
+
+        >>> my_list[0] = "a"
+        >>> my_list
+        ['a', 2, 3, 4, 5]
+    If we want to add to a list we can use the .append method. This is an example of a method that modifies the object that is calling the method: 
+
+        >>> my_list.append(6)
+        >>> my_list.append(7)
+        >>> my_list
+        ['a', 2, 3, 4, 5, 6, 7]
+    Lists can be added together (concatenated): 
+    -------------------------------------------
+
+        >>> my_list + [8, 9, 10]
+        ['a', 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        >>> my_list += [8, 9, 10]
+        >>> my_list
+        ['a', 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        Items in lists can be set using slices also: 
+
+        >>> my_list[1:3] = ['b', 'c']
+        >>> my_list
+        ['a', 'b', 'c', 4, 5, 6, 7, 8, 9, 10]
+    # Replacing 2 sized slice with length 3 list inserts new element
+        my_list[3:5] = ['d', 'e', 'f']
+        print(my_list)
+    We can remove a section of a list by assigning an empty list to the slice: 
+
+        >>> my_list = ['a', 'b', 'c', 'd', 5, 6, 7]
+        >>> my_list[4:] = []
+        >>> my_list
+        ['a', 'b', 'c', 'd']
+    Removing items from a list based on value can be done using the .remove method: 
+
+        >>> my_list.remove('b')
+        >>> my_list
+        ['a', 'c', 'd']
+    Attempting to remove and item that isn’t in the list will result in an error: 
+
+        >>> my_list.remove('f')
+        Traceback (most recent call last):
+        File "", line 1, in 
+        ValueError: list.remove(x): x not in list
+    Items can also be removed from the end of a list using the pop method: 
+
+        >>> my_list = ['a', 'c', 'd']
+        >>> my_list.pop()
+        'd'
+        >>> my_list
+        ['a', 'c']
+    We can also use the pop method to remove items at a specific index: 
+
+        >>> my_list.pop(0)
+        'a'
+        >>> my_list
+        ['c']
+        >>> my_list.pop(1)
+        Traceback (most recent call last):
+        File "", line 1, in 
+        IndexError: pop index out of range
+        >>> [].pop()
+        Traceback (most recent call last):
+        File "", line 1, in 
+        IndexError: pop from empty list
+
+Tuples:
+-------
+Reference:https://docs.python.org/3/library/stdtypes.html#tuple
+          https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range
+
+    Tuples:
+
+    Tuples are a fixed width, immutable sequence type. We create tuples using parenthesis (( and )) and at least one comma (,): 
+
+        >>> point = (2.0, 3.0)
+    Since tuples are immutable, we don’t have access to the same methods that we do on a list. We can use tuples in some operations like concatenation, but we can’t change the original tuple that we created. 
+
+        >>> point_3d = point + (4.0,)
+        >>> point_3d
+        (2.0, 3.0, 4.0)
+    One interesting characterist of tuples is that we can unpack them into multiple variables at the same time: 
+
+        >>> x, y, z = point_3d
+        >>> x
+        2.0
+        >>> y
+        3.0
+        >>> z
+        4.0
+    The time you’re most likely to see tuples will be when looking at a format string that’s compatible with Python 2: 
+
+        >>> print("My name is: %s %s" % ("Keith", "Thompson"))
+
+Dictionaries(dicts):
+--------------------
+Reference:https://docs.python.org/3/library/stdtypes.html#mapping-types-dict
+
+    Dictionaries
+    Dictionaries are the main mapping type that we’ll use in Python. This object is comparable to a Hash or “associative array” in other languages.
+
+    Things to note about dictionaries: 
+
+    Unlike Python 2 dictionaries, as of Python 3.6, keys are ordered in dictionaries. You'll need OrderedDict if you want this to work on another version of Python.
+    You can set the key to any IMMUTABLE TYPE (no lists).
+    Avoid using things other than simple objects as keys.
+    Each key can only have one value (so don’t have duplicates when creating a dict). 
+    We create dictionary literals by using curly braces ({ and }), separating keys from values using colons (:), and separating key/value pairs using commas (,). Here’s an example dictionary: 
+
+        >>> ages = { 'kevin': 59, 'alex': 29, 'bob': 40 }
+        >>> ages
+        {'kevin': 59, 'alex': 29, 'bob': 40}
+    We can read a value from a dictionary by subscripting using the key: 
+
+        >>> ages['kevin']
+        59
+        >>> ages['billy']
+        Traceback (most recent call last):
+        File "", line 1, in 
+        KeyError: 'billy'
+    Keys can be added or changed using subscripting and assignment: 
+
+        >>> ages['kayla'] = 21
+        >>> ages
+        {'kevin': 59, 'alex': 29, 'bob': 40, 'kayla': 21}
+    Items can be removed from a dictionary using the del statement or by using the pop method: 
+
+        >>> del ages['kevin']
+        >>> ages
+        {'alex': 29, 'bob': 40, 'kayla': 21}
+        >>> del ages
+        >>> ages
+        Traceback (most recent call last):
+        File "", line 1, in 
+        NameError: name 'ages' is not defined
+        >>> ages = { 'kevin': 59, 'alex': 29, 'bob': 40 }
+        >>> ages.pop('alex')
+        29
+        >>> ages
+        {'kevin': 59, 'bob': 40}
+    It’s not uncommon to want to know what keys or values we have without caring about the pairings. For that situation we have the values and keys methods: 
+
+        >>> ages = {'kevin': 59, 'bob': 40}
+        >>> ages.keys()
+        dict_keys(['kevin', 'bob'])
+        >>> list(ages.keys())
+        ['kevin', 'bob']
+        >>> ages.values()
+        dict_values([59, 40])
+        >>> list(ages.values())
+        [59, 40]
+    Alternative Ways to Create a dict Using Keyword Arguments
+    There are a few other ways to create dictionaries that we might see, those being those that use the dict constructor with key/value arguments and a list of tuples:
+
+        >>> weights = dict(kevin=160, bob=240, kayla=135)
+        >>> weights
+        {'kevin': 160, 'bob': 240, 'kayla': 135}
+        >>> colors = dict([('kevin', 'blue'), ('bob', 'green'), ('kayla', 'red')])
+        >>> colors
+        {'kevin': 'blue', 'bob': 'green', 'kayla': 'red'}
+
+13JAN2019:
+**********
+Control Flow:
+*************
+Condtionals and Comparisons:
+----------------------------
+https://docs.python.org/3/library/stdtypes.html#comparisons
+https://docs.python.org/3/tutorial/controlflow.html#if-statements
+Comparisons
+There are some standard comparison operators that we’ll use that match pretty closely to those used in mathematical equations. Let’s take a look at them:
+
+>>> 1 < 2
+True
+>>> 0 > 2
+False
+>>> 2 == 1
+False
+>>> 2 != 1
+True
+>>> 3.0 >= 3.0
+True
+>>> 3.1 <= 3.0
+False
+If we try to make comparisons of types that don’t match up, we will run into errors:
+
+>>> 3.1 <= "this"
+Traceback (most recent call last):
+  File "", line 1, in 
+TypeError: '<=' not supported between instances of 'float' and 'str'
+>>> 3 <= 3.1
+True
+>>> 1.1 == "1.1"
+False
+>>> 1.1 == float("1.1")
+True
+We can compare more than just numbers. Here’s what it looks like when we compare strings:
+
+>>> "this" == "this"
+True
+>>> "this" == "This"
+False
+>>> "b" > "a"
+True
+>>> "abc" < "b"
+True
+Notice that the string 'b' is considered greater than the strings 'a' and 'abc'. The characters are compared one at a time alphabetically to determine which is greater. This concept is used to sort strings alphabetically.
+
+The in Check
+We often get lists of information that we need to ensure contains (or doesn’t contain) a specific item. To make this check in Python, we’ll use the in and not in operations.
+
+>>> 2 in [1, 2, 3]
+True
+>>> 4 in [1, 2, 3]
+False
+>>> 2 not in [1, 2, 3]
+False
+>>> 4 not in [1, 2, 3]
+True
+if/elif/else
+With a grasp on comparisons, we can now look at how we can run different pieces of logic based on the values that we’re working with using conditionals. The keywords for conditionals in Python are if, elif, and else. Conditionals are the first language feature that we’re using that requires us to utilize whitespace to separate our code blocks. We will always use indentation of 4 spaces. The basic shape of an if statement is this:
+
+if CONDITION:
+    pass
+The CONDITION portion can be anything that evaluates to True or False, and if the value isn’t explicitly a boolean, then it will be converted to determine how to carry out proceed past the conditional (basically using the bool constructor).
+
+>>> if True:
+...     print("Was True")
+...
+Was True
+>>> if False:
+...     print("Was True")
+...
+>>>
+To add an alternative code path, we’ll use the else keyword, followed by a colon (:), and indenting the code underneath:
+
+>>> if False:
+...     print("Was True")
+... else:
+...     print("Was False")
+...
+Was False
+In the even that we want to check multiple potential conditions we can use the elif CONDITION: statement. Here’s a more robust example:
+
+>>> name = "Kevin"
+>>> if len(name) >= 6:
+...     print("name is long")
+... elif len(name) == 5:
+...     print("name is 5 characters")
+... elif len(name) >= 4:
+...     print("name is 4 or more")
+... else:
+...     print("name is short")
+...
+name is 5 characters
+Notice that we fell into the first elif statement’s block and then the second elif block was never executed even though it was true. We can only exercise one branch in an if statement.
+
+The While Loop:
+---------------
+https://docs.python.org/3/tutorial/introduction.html#first-steps-towards-programming
+https://docs.python.org/3/tutorial/controlflow.html#for-statements%3CPaste%3E
+The while Loop
+The most basic type of loop that we have at our disposal is the while loop. This type of loop repeats itself based on a condition that we pass to it. Here’s the general structure of a while loop:
+
+while CONDITION:
+    pass
+The CONDITION in this statement works the same way that it does for an if statement. When we demonstrated the if statement, we first tried it by simply passing in True as the condition. Let’s see when we try that same condition with a while loop:
+
+>>> while True:
+...     print("looping")
+...
+looping
+looping
+looping
+looping
+That loop will continue forever, we’ve created an infinite loop. To stop the loop, press Ctrl-C. Infinite loops are one of the potential problems with while loops if we don’t use a condition that we can change from within the loop then it will continue forever if initially true. Here’s how we’ll normally approach using a while loop where we modify something about the condition on each iteration:
+
+>>> count = 1
+>>> while count <= 4:
+...     print("looping")
+...     count += 1
+...
+looping
+looping
+looping
+looping
+>>>
+We can use other loops or conditions inside of our loops; we need only remember to indent four more spaces for each context. If in a nested context, we want to continue to the next iteration or stop the loop entirely. We also have access to the continue and break keywords:
+
+>>> count = 0
+>>> while count < 10:
+...     if count % 2 == 0:
+...         count += 1
+...         continue
+...     print(f"We're counting odd numbers: {count}")
+...     count += 1
+...
+We're counting odd numbers: 1
+We're counting odd numbers: 3
+We're counting odd numbers: 5
+We're counting odd numbers: 7
+We're counting odd numbers: 9
+>>>
+In that example, we also show off how to “string interpolation” in Python 3 by prefixing a string literal with an f and then using curly braces to substitute in variables or expressions (in this case the count value).
+
+Here’s an example using the break statement:
+
+>>> count = 1
+>>> while count < 10:
+...     if count % 2 == 0:
+...         break
+...     print(f"We're counting odd numbers: {count}")
+...     count += 1
+...
+We're counting odd numbers: 1
+
+The 'for' Loop:
+---------------
+The most common use we have for looping is when we want to execute some code for each item in a sequence. For this type of looping or iteration, we’ll use the for loop. The general structure for a for loop is:
+
+for TEMP_VAR in SEQUENCE:
+    pass
+The TEMP_VAR will be populated with each item as we iterate through the SEQUENCE and it will be available to us in the context of the loop. After the loop finishes one iteration, then the TEMP_VAR will be populated with the next item in the SEQUENCE, and the loop’s body will execute again. This process continues until we either hit a break statement or we’ve iterated over every item in the SEQUENCE. Here’s an example looping over a list of colors:
+
+>>> colors = ['blue', 'green', 'red', 'purple']
+>>> for color in colors:
+...     print(color)
+...
+blue
+green
+red
+purple
+>>> color
+'purple'
+If we didn't want to print out certain colors we could utilize the continue or break statements again. Let’s say we want to skip the string 'blue' and terminate the loop if we see the string 'red':
+
+>>> colors = ['blue', 'green', 'red', 'purple']
+>>> for color in colors:
+...     if color == 'blue':
+...         continue
+...     elif color == 'red':
+...         break
+...     print(color)
+...
+green
+>>>
+Other Iterable Types
+Lists will be the most common type that we iterate over using a for loop, but we can also iterate over other sequence types. Of the types we already know, we can iterate over strings, dictionaries, and tuples.
+
+Here’s a tuple example:
+
+>>> point = (2.1, 3.2, 7.6)
+>>> for value in point:
+...     print(value)
+...
+2.1
+3.2
+7.6
+>>>
+A dictionary example:
+
+>>> ages = {'kevin': 59, 'bob': 40, 'kayla': 21}
+>>> for key in ages:
+...     print(key)
+...
+kevin
+bob
+kayla
+A string example:
+
+>>> for letter in "my_string":
+...     print(letter)
+...
+m
+y
+_
+s
+t
+r
+i
+n
+g
+>>>
+Unpacking Multiple Items in a for Loop
+We discussed in the tuples video how you can separate a tuple into multiple variables by “unpacking” the values. Unpacking works in the context of a loop definition, and you’ll need to know this to most effectively iterate over dictionaries because you’ll usually want the key and the value. Let’s iterate of a list of “points” to test this out:
+
+>>> list_of_points = [(1, 2), (2, 3), (3, 4)]
+>>> for x, y in list_of_points:
+...     print(f"x: {x}, y: {y}")
+...
+x: 1, y: 2
+x: 2, y: 3
+x: 3, y: 4
+Seeing how this unpacking works, let’s use the items method on our ages dictionary to list out the names and ages:
+
+>>> for name, age in ages.items():
+...     print(f"Person Named: {name}")
+...     print(f"Age of: {age}")
+...
+Person Named: kevin
+Age of: 59
+Person Named: bob
+Age of: 40
+Person Named: kayla
+Age of: 21
+
+Logic Operations:
+-----------------
+https://docs.python.org/3/tutorial/introduction.html#first-steps-towards-programming
+
+The not Operation
+Sometimes we want to know the opposite boolean value for something. This might not sound intuitive, but sometimes we want to execute an if statement when a value is False, but that’s not how the if statement works. Here’s an example of how we can use not to make this work:
+
+>>> name = ""
+>>> not name
+True
+>>> if not name:
+...     print("No name given")
+...
+>>>
+We know that an empty string is a “falsy” value, so not "" will always return True. not will return the opposite boolean value for whatever it’s operating on.
+
+The or Operation
+Occasionally, we want to carry out a branch in our logic if one condition OR the other condition is True. Here is where we’ll use the or operation. Let’s see or in action with an if statement:
+
+>>> first = ""
+>>> last = "Thompson"
+>>> if first or last:
+...     print("The user has a first or last name")
+...
+The user has a first or last name
+>>>
+If both first and last were “falsy” then the print would never happen:
+
+>>> first = ""
+>>> last = ""
+>>> if first or last:
+...     print("The user has a first or last name")
+...
+>>>
+Another feature of or that we should know is that we can use it to set default values for variables:
+
+>>> last = ""
+>>> last_name = last or "Doe"
+>>> last_name
+'Doe'
+>>>
+The or operation will return the first value that is “truthy” or the last value in the chain:
+
+>>> 0 or 1
+1
+>>> 1 or 2
+1
+The and Operation
+The opposite of or is the and operation, which requires both conditions to be True. Continuing with our first and last name example, let’s conditionally print based on what we know:
+
+>>> first = "Keith"
+>>> last = ""
+>>> if first and last:
+...     print(f"Full name: {first} {last}")
+... elif first:
+...     print(f"First name: {first}")
+... elif last:
+...     print(f"Last name: {last}")
+...
+First name: Keith
+>>>
+Now let’s try the same thing with both first and last:
+
+>>> first = "Keith"
+>>> last = "Thompson"
+>>> if first and last:
+...     print(f"Full name: {first} {last}")
+... elif first:
+...     print(f"First name: {first}")
+... elif last:
+...     print(f"Last name: {last}")
+...
+Full name: Keith Thompson
+>>>
+The and operation will return the first value that is “falsy” or the last value in the chain:
+
+>>> 0 and 1
+0
+>>> 1 and 2
+2
+>>> (1 == 1) and print("Something")
+Something
+>>> (1 == 2) and print("Something")
+False
+
+Excercises:
+***********
+Excercise:1:
+------------
+Write a Python script that sets the following variables:
+
+first_name - Set to your first name
+last_name - Set to your last name
+age - Set to your age as an integer
+birth_date - Set to your birthdate as a string
+
+Using the variables, print the following to the screen when you run the script:
+
+My name is FIRST_NAME LAST_NAME.
+I was born on BIRTH_DATE, and I'm AGE years old.
+
+Solution:
+---------
+#!/usr/bin/env python3
+
+first_name = "Kevin"
+last_name = "Bacon"
+age = 59
+birth_date = "07/08/1958"
+
+print(f"My name is {first_name} {last_name}.")
+print(f"I was born on {birth_date}, and I'm {age} years old.")
+
+Excercise:2:
+------------
+Create a script that has a single variable you can set at the top called user. This user is a dictionary containing the keys:
+
+'admin' - a boolean representing whether the user is an admin user.
+'active' - a boolean representing whether the user is currently active.
+'name' - a string that is the user’s name.
+Example:
+
+user = { 'admin': True, 'active': True, 'name': 'Kevin' }
+Depending on the values of user print one of the following to the screen when you run the script.
+
+Print (ADMIN) followed by the user’s name if the user is an admin.
+Print ACTIVE - followed by the user’s name if the user is active.
+Print ACTIVE - (ADMIN) followed by the user’s name if the user is an admin and active.
+Print the user’s name if neither active nor an admin.
+Change the values of user and re-run the script multiple times to ensure that it works.
+
+Solution:
+---------
+#!/usr/bin/env python3.6
+
+user = { 'admin': True, 'active': True, 'name': 'Kevin' }
+prefix = ""
+
+if user['admin'] and user['active']:
+    prefix = "ACTIVE - (ADMIN) "
+elif user['admin']:
+    prefix = "(ADMIN) "
+elif user['active']:
+    prefix = "ACTIVE - "
+
+print(prefix + user['name'])
+
+Excercise:3:
+------------
+Building on top of the conditional exercise, write a script that will loop through a list of users where each item is a user dictionary from the previous exercise printing out each user’s status on a separate line. Additionally, print the line number at the beginning of each line, starting with line 1. Be sure to include a variety of user configurations in the users list.
+
+User Keys:
+
+'admin' - a boolean representing whether the user is an admin user.
+'active' - a boolean representing whether the user is currently active.
+'name' - a string that is the user’s name.
+Depending on the values of the user, print one of the following to the screen when you run the script.
+
+Print (ADMIN) followed by the user’s name if the user is an admin.
+Print ACTIVE - followed by the user’s name if the user is active.
+Print ACTIVE - (ADMIN) followed by the user’s name if the user is an admin and active.
+Print the user’s name if neither active nor an admin.
+
+Solution:
+---------
+#!/usr/bin/env python3.6
+
+users = [
+    { 'admin': True, 'active': True, 'name': 'Kevin' },
+    { 'admin': True, 'active': False, 'name': 'Elisabeth' },
+    { 'admin': False, 'active': True, 'name': 'Josh' },
+    { 'admin': False, 'active': False, 'name': 'Kim' },
+]
+
+line = 1
+
+for user in users:
+    prefix = f"{line} "
+
+    if user['admin'] and user['active']:
+        prefix += "ACTIVE - (ADMIN) "
+    elif user['admin']:
+        prefix += "(ADMIN) "
+    elif user['active']:
+        prefix += "ACTIVE - "
+
+    print(prefix + user['name'])
+    line += 1
+
+Scripting With Python3:
+***********************
+Basic Scripting:
+****************
+Reading user inputs:
+--------------------
+https://docs.python.org/3/library/functions.html#input
+
+Accepting User Input Using input:
+---------------------------------
+We’re going to build a script that requests three pieces of information from the user after the script runs. Let’s collect this data:
+
+name - The user’s name as a string
+birthdate - The user’s birthdate as a string
+age - The user’s age as an integer (we’ll need to convert it)
+~/bin/age
+
+#!/usr/bin/env python3.6
+
+name = input("What is your name? ")
+birthdate = input("What is your birthdate? ")
+age = int(input("How old are you? "))
+
+print(f"{name} was born on {birthdate}")
+print(f"Half of your age is {age / 2}")
+
+Functions Basics:
+-----------------
+https://docs.python.org/3/tutorial/controlflow.html#defining-functions
+
+Function Basics
+We can create functions in Python using the following:
+
+The def keyword
+The function name - lowercase starting with a letter or underscore (_)
+Left parenthesis (()
+0 or more argument names
+Right parenthesis ())
+A colon :
+An indented function body
+Here’s an example without an argument:
+
+>>> def hello_world():
+...     print("Hello, World!")
+...
+>>> hello_world()
+Hello, World!
+>>>
+If we want to define an argument we will put the variable name we want it to have within the parentheses:
+
+>>> def print_name(name):
+...     print(f"Name is {name}")
+...
+>>> print_name("Keith")
+Name is Keith
+Let’s try to assign the value from print_name to a variable:
+
+>>> output = print_name("Keith")
+Name is Keith
+>>> output
+>>>
+Neither of these examples has a return value, but we will usually want to have a return value unless the function is our “main” function or carries out a “side-effect” like printing. If we don’t explicitly declare a return value, then the result will be None.
+
+We can declare what we’re returning from a function using the return keyword:
+
+>>> def add_two(num):
+...     return num + 2
+...
+>>> result = add_two(2)
+>>> result
+4
+
+14JAN2019:
+----------
+https://docs.python.org/3/tutorial/controlflow.html#defining-functions
+
+Encapsulating Behavior with Functions
+To dig into functions, we’re going to write a script that prompts the user for some information and calculates the user’s Body Mass Index (BMI). That isn’t a common problem, but it’s something that makes sense as a function and doesn’t require us to use language features that we haven’t learned yet.
+
+Here’s the formula for BMI:
+
+BMI = (weight in kg / height in meters squared )
+For Imperial systems, it’s the same formula except you multiply the result by 703.
+
+We want to prompt the user for their information, gather the results, and make the calculations if we can. If we can’t understand the measurement system, then we need to prompt the user again after explaining the error.
+
+Gathering Info
+Since we want to be able to prompt a user multiple times we’re going to package up our calls to input within a single function that returns a tuple with the user given information:
+
+def gather_info():
+    height = float(input("What is your height? (inches or meters) "))
+    weight = float(input("What is your weight? (pounds or kilograms) "))
+    system = input("Are your measurements in metric or imperial units? ").lower().strip()
+    return (height, weight, system)
+We’re converting the height and weight into float values, and we’re okay with a potential error if the user inputs an invalid number. For the system, we’re going to standardize things by calling lower to lowercase the input and then calling strip to remove the whitespace from the beginning and the end.
+
+The most important thing about this function is the return statement that we added to ensure that we can pass the height, weight, and system back to the caller of the function.
+
+Calculating and Printing the BMI
+Once we’ve gathered the information, we need to use that information to calculate the BMI. Let’s write a function that can do this:
+
+def calculate_bmi(weight, height, system='metric'):
+    """
+    Return the Body Mass Index (BMI) for the
+    given weight, height, and measurement system.
+    """
+    if system == 'metric':
+        bmi = (weight / (height ** 2))
+    else:
+        bmi = 703 * (weight / (height ** 2))
+    return bmi
+This function will return the calculated value, and we can decide what to do with it in the normal flow of our script.
+
+The triple-quoted string we used at the top of our function is known as a “documentation string” or “doc string” and can be used to automatically generated documentation for our code using tools in the Python ecosystem.
+
+Setting Up The Script’s Flow
+Our functions don’t do us any good if we don’t call them. Now it’s time for us to set up our scripts flow. We want to be able to re-prompt the user, so we want to utilize an intentional infinite loop that we can break out of. Depending on the system, we’ll determine how we should calculate the BMI or prompt the user again. Here’s our flow:
+
+while True:
+    height, weight, system = gather_info()
+    if system.startswith('i'):
+        bmi = calculate_bmi(weight, system='imperial', height=height)
+        print(f"Your BMI is {bmi}")
+        break
+    elif system.startswith('m'):
+        bmi = calculate_bmi(weight, height)
+        print(f"Your BMI is {bmi}")
+        break
+    else:
+        print("Error: Unknown measurement system. Please use imperial or metric.")
+Full Script
+Once we’ve written our script, we’ll need to make it executable (using chmod u+x ~/bin/bmi).
+
+~/bin/bmi
+
+#!/usr/bin/env python3.6
+
+def gather_info():
+    height = float(input("What is your height? (inches or meters) "))
+    weight = float(input("What is your weight? (pounds or kilograms) "))
+    system = input("Are your mearsurements in metric or imperial systems? ").lower().strip()
+    return (height, weight, system)
+
+def calculate_bmi(weight, height, system='metric'):
+    if system == 'metric':
+        bmi = (weight / (height ** 2))
+    else:
+        bmi = 703 * (weight / (height ** 2))
+    return bmi
+
+while True:
+    height, weight, system = gather_info()
+    if system.startswith('i'):
+        bmi = calculate_bmi(weight, system='imperial', height=height)
+        print(f"Your BMI is {bmi}")
+        break
+    elif system.startswith('m'):
+        bmi = calculate_bmi(weight, height)
+        print(f"Your BMI is {bmi}")
+        break
+    else:
+        print("Error: Unknown measurement system. Please use imperial or metric.")
+

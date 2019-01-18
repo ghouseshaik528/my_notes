@@ -1,0 +1,26 @@
+PostgresSQL_notes:
+------------------
+
+How to install PostgresSQL:
+---------------------------
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
+
+Accessing a Postgres Prompt:
+----------------------------
+sudo -u postgres psql
+
+To Quit:
+--------
+\q
+
+To create User with password:
+-----------------------------
+\password 'username'
+    Ex: \password postgres
+Enter your password:
+
+Create a database:
+------------------
+CREATE DATABASE 'dbname' OWNER 'username'
+    Ex: CREATE DATABASE btredb OWNER postgres

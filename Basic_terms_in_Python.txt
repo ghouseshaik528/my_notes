@@ -1,0 +1,285 @@
+Variable: A variable is a container for a value, which can be of various types.
+
+Strings: Strings in python are surrounded by single or double quotation marks.
+
+String formattings:
+    >arguments by position  //print('{1},{2},{0}'.format('a','b','c'))
+    >arguments by name      //print('My name is {name} and i am {age}'.format(name=name,age=age))
+    >F-Strings              //print(f'My name is {name} and i am {age}')
+
+#s='hello world python'
+String Methods:
+    1>capitalize //print(s.capitalize())          #Hello world python
+    2>Upper      //print(s.upper())               #HELLO WORLD PYTHON
+    3>Lower      //print(s.lower())               #hello world python
+    4>Swapcase   //print(s.swapcase())            #HELLO WORLD PYTHON
+    5>len        //print(len(s))                  #18
+    6>Count      //sub='h' //print(s.count(sub))  #2
+    7>replace    //print(s.replace('hello','wassup')) #wassup world python
+    8>split      //print(s.split())               #['hello','world','python']
+    9>startswith //print(s.startswith('everyone'))#False
+    10>endswith   //print(s.endswith('python'))   #True
+    11>find       //print(s.find('r'))            #8
+    12>isalnum    //print(s.isalnum())            #False
+    13>isalpha    //print(s.isalpha)              #True
+    14>isnumeric  //print(s.isnumeric)            #False
+
+List: A List is a collection which is ordered and changeable. Allow duplicate members.
+
+    >create list:                    //numbers = [1,7,5,3]
+    >Creating list using Constructor //numbers = list((1,5,8,3))
+    
+    fruits=['apples','oranges','strawberry','grapes']
+    1>Getting Value:         //print(fruits[1])              #oranges
+    2>Getting length         //print(len(fruits))            #4
+    3>Appending List         //fruits.append('Mangos')       #['apples','oranges','strawberry','grapes','Mangos']
+    4>Remove from List       //fruits.remove('grapes')       #['apples','oranges','strawberry','Mangos']
+    5>Insert into position   //fruits.insert(2,'pineapple')  #['apples','oranges','pineapple','strawberry','grapes']
+    6>Remove from position   //fruits.pop(3)                 #['apples','oranges','pineapple','grapes']
+    7>Reverse list           //fruits.reverse()              #['grapes','strawberry','oranges','apples']
+    8>sort list              //fruits.sort()                 #['apples','oranges','grapes','pineapple']
+    9>reverse sort           //fruits.sort(reverse=True)     #['pineapple','oranges','grapes','apples']
+
+Tuples: A tuple is a collection which is ordered and unchangeable. Allow duplicate members.
+
+    fruits = ('apples','oranges','strawberry','grapes')
+    1>simple tuple              //fruits = ('apples','oranges','strawberry','grapes')
+    2>using Constructor         //fruits=tuple(('apples','oranges','strawberry'))
+    3>Getting value             //print(fruits[1])           #oranges
+    4>Cannot change value       //fruits[1]='grapes'         #throws type error
+    5>Tuples with one value should have a trailing comma //fruits = ['banana',]
+    6>getting length of tuple   //print(len(fruits))         #4
+
+sets: A set is a collection which is unordered and unindexed. No duplicate members.
+
+    1>create set         //fruit_set = {'apples','banana','oranges'}
+    2>check if in set    //print('apples' in fruit_set)      #True
+    3>add to set         //fruit_set.add('grapes')           #{'apples','banana','grapes','oranges'}
+    4>remove from set    //fruit_set.remove('grapes')        #{'apples','banana','oranges'}
+    5>clear from set     //fruit_set.clear()                 #set()
+    6>delete from set    //del fruit_set                     #throws name error
+
+Dictionaries: A dictionary is a collection which is unordered, changeable and indexed. No duplicate members.
+
+    1>simple dictionary  //person = {
+                                        'name':'Areeb',
+                                        'age':25
+                                    }
+    2>Using Constructor   //person = dict(name='Areeb',age=25)
+    3>Accessing values    //print(person['name'])     #Areeb
+                          //print(person.get('name')) #Areeb
+    4>Add key/value       //person['phone']='555-532'
+    5>Get key             //print(person.keys())      #dict_keys(['name', 'age'])
+    6>Get value           //print(person.values())    #dict_values(['Areeb', 25])
+    7>Make copy           //person2 = person.copy()
+                          //person2['city']='Boston'
+    8>Reomve item         //del(person['age'])
+                          //person.pop('phone')
+    9>clear               //person.clear()
+    10>length             //print(len(person))
+    11>List of Dict       //people=[
+                                    {'name':'Martha','age':21},
+                                    {'name':'Rafi','age':25}
+                                 ]
+                          //print(people[1]['name'])  #Rafi
+
+Function: A function is a block of code which only runs when it is called. In python we dont use parenthesis or curly braces, instead we use indentation with tabs and spaces.
+
+    1>create function:   //def sayHello(name= 'Areeb'):
+                          '''
+                          prints Hello and then name
+                          '''
+                          print('Hello '+name)                  #Hello Areeb
+    2>return Value       //def getSum(num1,num2):
+                            total = num1+num2
+                            return total
+                        addSum = getSum(1,2)
+                        print(addSum)                           #3
+                        //def addOneToNum(num):
+                            num+=1
+                            return num
+                        num=5
+                        new_num=addOneToNum(num)
+                        print(new_num)                          #6
+
+Lambda: A Lambda function is a small anonymous function. A Lambda function can take any number of arguments but can only have one expression. very similar to js arrow function.
+
+    1>getSum = lambda num1,num2:num1+num2
+     print(getSum(1,2))                     #3
+    
+    2>addOneToNum = lambda num:num+1
+     print(addOneToNum(5))                  #6
+
+Conditionals: If/Else Conditionals are used to decide to do something based on something being True or False.
+    x=10
+    y=1
+    1>Comparision Operators(==, !=, >, <, >=, <=): used to compare values
+        >simpleif:  //if x==y:
+                        print(f'{x} is equal to {y}')
+        >if/else:   //if x>y:
+                        print(f'{x} is greater than {y}')
+                      else:
+                        print(f'{x} is less than {y}')
+        >elif:      //if x>y:
+                        print(f'{x} is greater than {y}')
+                      elif(x==y):
+                        print(f'{x} is equal to {y}')
+                      else:
+                        print(f'{x} is less than {y}')
+        >Nestedif:  //if x>2:
+                        if x<=10:
+                            print(f'{x} is greater than 2 and less than 10')
+    2>Logical Operators(and, or, not): used to combine Conditionals statements.
+        >and:       //if x>2 and x<=10:
+                         print(f'{x} is greater than 2 and less than 10')
+        >or:        //if x>2 or x<=10:
+                         print(f'{x} is greater than 2 or less than 10')
+        >not:       //if not(x==y):
+                         print(f'{x} is not equal to {y}')
+    3>Membership Operators(in, not in):used to test if a sequence is presented in an object.
+    numbers=[2,5,3,8]
+        >in:        //if x in numbers:
+                        print(x in numbers)
+        >not in:    //if x not in numbers:
+                        print(x not in numbers)
+    4>Identity Operators(is, is not):compare the objects, not they are equal but if they are actually the same object,with the same memory location.
+        >is:        //if x is y:
+                        print(x is y)
+        >is not:    //if x is not y:
+                        print(x is not y)
+
+Loop: A loop is used for iterating over a sequence(that is either a list, tuple, dictionary, a set or a string).
+
+    people = ['Areeb','Rafi','Zain','Ameer']
+
+    1>simple for loop    //for person in people:
+                            print('Current people :',person)
+    2>Break              //for person in people:
+                            if person == 'Rafi':
+                                Break
+                            print('Current people :',person)
+    3>Continue           //for person in people:
+                            if person == 'Rafi':
+                                Continue
+                            print('Current people :',person)
+    4>Range              //for i in range(len(people)):
+                            print('Current people :',people[i])
+                        //for i in range(0,11):
+                            print('Number ',i)
+    5>While: execute a set of statements as long as a condition is true.
+                        //count=0
+                          while count<=10:
+                            print('Count: ',count)
+                            count += 1
+
+Module: A module is basically a file containing a set of functions to include in your application. There are core python modules, modules you can install using the pip package manager (including Django) as well as custom modules.
+
+    1>core modules:          //import datetime
+                              from datetime import date
+                              import time
+                              from time import time
+    # Example for core module to be imported
+        #today = datetime.date.today()
+        today     = date.today()
+        timestamp = time()
+
+    2>pip modules:           //import camelcase
+    # Example of a pip module to be imported
+
+        camel = camelcase.CamelCase()
+        text  = 'hello world python'
+
+    3>custom modules:        //import validator
+                              from validator import validate_email
+    # Example of a custom module to be imported
+
+        import re
+        def validate_email(email):
+            if len(email) > 7:
+                return bool(re.match("^.+@(\[?)[a-zA-Z0-9-.]+.([a-zA-Z]{2,3}|[0-9]{1,3})(]?)$", email))
+
+        email = 'test@test.com'
+        if validate_email(email):
+           print('Email is valid')
+        else
+           print('Email invalid')
+
+Classes: A class is like a blueprint for Creating object. An object has properties and methods(functions) associated it. Almost everything in python is an object.
+    1>create class:
+        Ex:1
+        class User:
+            #Constructor
+            def __init__(self,name,email,age):
+                self.name = name
+                self.email = email
+                self.age = age
+
+            def greeting(self):
+                return f'My name is {self.name} and my age is {self.age}'
+
+            def has_birthday(self):
+                self.age+=1
+    
+        # Customer class
+        class Customer(User):
+            def __init__(self, name, email, age):
+                self.name = name
+                self.email = email
+                self.age = age
+                self.balance = 0
+
+            def set_balance(self, balance):
+                self.balance = balance
+
+            def greeting(self):
+                return f'My name is {self.name} and I am {self.age} and I owe a balance of {self.balance}'
+
+        # Init user object
+        brad = User('Brad Traversy', 'brad@gmail.com', 37)
+        janet = User('Janet Williams', 'janet@gmail.com', 27)
+
+        # Edit property
+        brad.age = 38
+
+        janet.has_birthday()
+
+        # Call method
+        print(janet.greeting())
+
+        # Init customer
+        john = Customer('John Doe', 'john@gmail.com', 40)
+
+        john.set_balance(500)
+
+        print(john.greeting())
+
+Files: Python has functions for creating, reading, updating and deleting files.
+    
+    1>Open a file:       //myFile = open('myfile.txt','w')
+    2>Get some Info      //print('Name',myFile.name)
+                           print('Is Closed', myFile.closed)
+                           print('Opening mode', myFile.mode)
+    3>write to file      //myFile.write('I Love Python')
+                           myFile.write(' and Javascript')
+                           myFile.close()
+    4>append to file     //myFile = open('myfile.txt', 'a')
+                           myFile.write('I also like PHP')
+                           myFile.close()
+    5>read from file     //myFile = open('myFile.txt', 'r+')
+                           text = myFile.read(100)
+                           print(text)
+
+Working with JSON:  JSON is commonly used with data APIs. Here how we can parse JSON into a python dictionary.
+
+    import JSON
+
+    1>simple JSON:
+        userJSON = '{"first_name":"Areeb","last_name":"Shaik","age":25}'
+    2>Parse to dict:
+        user = json.loads(userJSON)
+        print(user)
+        print(user['first_name'])
+    3>Dict to parse:
+        car = {'make': 'Ford', 'model': 'Mustang', 'year': 1970}
+        carJSON = json.dumps(car)
+        print(carJSON)

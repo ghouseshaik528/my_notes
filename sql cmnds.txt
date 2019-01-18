@@ -1,0 +1,22 @@
+1.syntax for creating database:
+	CREATE DATABASE <name>;
+	ex.CREATE DATABASE sample;
+2.syntax for using database:
+	USE <name>;
+	ex.USE sample;
+3.syntax for deleting database;
+	DROP DATABASE <name>;
+	ex.DROP DATABASE sample;
+4.syntax for creating table:
+	CREATE TABLE <name> (col1 datatype...
+			    coln datatype
+			    primary key());
+	ex.CREATE TABLE employee(id int primay key,
+			name varchar(30),
+			dob datetime,
+			email varchar(40));
+5.syntax for creating table from other tables:
+	CREATE TABLE <NEW NAME> AS 
+		SELECT COL1,col2 FROM <old table name>;
+	ex.CREATE TABLE emp_info as SELECT
+		id,name FROM employee;

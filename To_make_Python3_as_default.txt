@@ -1,0 +1,6 @@
+step.1
+    Open your .bashrc file nano ~/.bashrc. 
+step.2
+    Type alias python=python3 on to a new line at the top of the file then save the file with ctrl+o and close the file with ctrl+x. 
+step.3
+    Then, back at your command line type source ~/.bashrc. Now your alias should be permanent.
